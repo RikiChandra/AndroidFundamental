@@ -36,6 +36,7 @@ class MainActivity : AppCompatActivity() {
 
 
         val loadingProgressBar = findViewById<ProgressBar>(R.id.loading)
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
 
         recyclerView = findViewById(R.id.RvData)
@@ -45,35 +46,22 @@ class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
 
 
-
-
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        viewModel.users.observe(this, { users ->
+        viewModel.users.observe(this) { users ->
             setUserData(users)
-        })
+        }
 
-
-
-        viewModel.isLoading.observe(this, { isLoading ->
+        viewModel.isLoading.observe(this) { isLoading ->
             loadingProgressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
-        })
+        }
 
-
-
-
-        viewModel.isNotFound.observe(this, { isNotFound ->
+        viewModel.isNotFound.observe(this) { isNotFound ->
             if (isNotFound ) {
                 viewModel.getUserSearch(randomText(2))
                 Toast.makeText(this, "Data tidak ditemukan", Toast.LENGTH_SHORT).show()
             }
-        })
-
-
+        }
 
         viewModel.getUserSearch(randomText(2))
-
-
-
 
     }
 
@@ -101,24 +89,11 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-//    private fun setUserData(users: List<UserGithub>) {
-//        val list = ArrayList<UserGithub>()
-//        for (user in users) {
-//            list.clear()
-//            list.addAll(users)
-//        }
-//
-//        val adapter = AdapterList(list)
-//        recyclerView.adapter = adapter
-//
-//
-//
-//    }
 
     private fun setUserData(users: List<UserGithub>) {
-        listUsergit.clear() // clear listUsergit pada activity
-        listUsergit.addAll(users) // tambahkan semua item pada users ke listUsergit
-        adapter.notifyDataSetChanged() // refresh adapter
+        listUsergit.clear()
+        listUsergit.addAll(users)
+        adapter.notifyDataSetChanged()
 
     }
 

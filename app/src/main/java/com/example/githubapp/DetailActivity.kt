@@ -17,9 +17,6 @@ class DetailActivity : AppCompatActivity() {
     private lateinit var viewModel: DetailModelView
     private var username: String = ""
 
-    private lateinit var Tvname : TextView
-    private lateinit var Tvusername : TextView
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
@@ -28,6 +25,7 @@ class DetailActivity : AppCompatActivity() {
         val loadingProgressBar = findViewById<ProgressBar>(R.id.loadings)
         val sectionsPagerAdapter = SectionsPagerAdapter(this, intent.getStringExtra("login") ?: "")
         val viewPager = findViewById<ViewPager2>(R.id.view_pager)
+
         viewPager.adapter = sectionsPagerAdapter
         val tabs = findViewById<com.google.android.material.tabs.TabLayout>(R.id.tab_layout)
         TabLayoutMediator(tabs, viewPager) { tab, position ->
@@ -48,7 +46,7 @@ class DetailActivity : AppCompatActivity() {
         viewModel.getUserDetail(username)
 
         // Observer untuk memperbarui tampilan saat data diubah
-        viewModel.userDetail.observe(this, { detailUser ->
+        viewModel.userDetail.observe(this) { detailUser ->
             showDetailUser(detailUser)
             if (detailUser.name == null) {
                 supportActionBar?.title = detailUser.login
@@ -56,13 +54,12 @@ class DetailActivity : AppCompatActivity() {
                 supportActionBar?.title = detailUser.name
             }
 
-        })
-
+        }
 
         // Observer untuk menampilkan loading
-        viewModel.isLoading.observe(this, { isLoading ->
+        viewModel.isLoading.observe(this) { isLoading ->
             loadingProgressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
-        })
+        }
 
     }
 

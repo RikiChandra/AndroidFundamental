@@ -58,34 +58,34 @@ class FollowFragment : Fragment() {
         val viewModel = ViewModelProvider(this).get(FollowViewModel::class.java)
         viewModel.getFollowers(username)
 
-        viewModel.users.observe(viewLifecycleOwner, {
+        viewModel.users.observe(viewLifecycleOwner) {
             adapter.apply {
                 listUser.clear()
                 listUser.addAll(it)
                 notifyDataSetChanged()
             }
-        })
+        }
 
-        viewModel.isLoading.observe(viewLifecycleOwner, {
+        viewModel.isLoading.observe(viewLifecycleOwner) {
             binding.loadings.visibility = if (it) View.VISIBLE else View.GONE
-        })
+        }
     }
 
     private fun getFollowing(username: String) {
         val viewModel = ViewModelProvider(this).get(FollowViewModel::class.java)
         viewModel.getFollowing(username)
 
-        viewModel.users.observe(viewLifecycleOwner, {
+        viewModel.users.observe(viewLifecycleOwner) {
             adapter.apply {
                 listUser.clear()
                 listUser.addAll(it)
                 notifyDataSetChanged()
             }
-        })
+        }
 
-        viewModel.isLoading.observe(viewLifecycleOwner, {
+        viewModel.isLoading.observe(viewLifecycleOwner) {
             binding.loadings.visibility = if (it) View.VISIBLE else View.GONE
-        })
+        }
     }
 
     override fun onDestroyView() {
