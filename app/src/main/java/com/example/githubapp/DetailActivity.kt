@@ -5,9 +5,12 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModelProvider
+import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.example.githubapp.databinding.ActivityDetailBinding
+import com.google.android.material.tabs.TabLayoutMediator
 
 class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
@@ -23,6 +26,13 @@ class DetailActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val loadingProgressBar = findViewById<ProgressBar>(R.id.loadings)
+        val sectionsPagerAdapter = SectionsPagerAdapter(this)
+        val viewPager = findViewById<ViewPager2>(R.id.view_pager)
+        viewPager.adapter = sectionsPagerAdapter
+        val tabs = findViewById<com.google.android.material.tabs.TabLayout>(R.id.tab_layout)
+        TabLayoutMediator(tabs, viewPager) { tab, position ->
+            tab.text = resources.getString(TAB_TITLES[position])
+        }.attach()
 
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -70,5 +80,10 @@ class DetailActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_USERNAME = "extra_username"
+        @StringRes
+        private val TAB_TITLES = intArrayOf(
+            R.string.followers,
+            R.string.following
+        )
     }
 }

@@ -11,10 +11,12 @@ import android.view.View
 import android.widget.Adapter
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.appcompat.widget.SearchView
+import androidx.viewpager2.widget.ViewPager2
 import com.example.githubapp.AdapterList
 
 
@@ -30,7 +32,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
 
 
 
