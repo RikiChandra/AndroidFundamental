@@ -9,6 +9,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+
 class FollowViewModel : ViewModel() {
 
     private val apiService = ApiConfig().apiService
@@ -16,11 +17,12 @@ class FollowViewModel : ViewModel() {
     private val _users = MutableLiveData<List<UserGithub>>()
     val users: LiveData<List<UserGithub>> = _users
 
+
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean>
         get() = _isLoading
 
-    internal fun getFollowers(username: String, fragment : FollowFragment) {
+    internal fun getFollowers(username: String) {
         _isLoading.postValue(true)
         val client = apiService.getUserFollowers(username)
         client.enqueue(object : Callback<List<UserGithub>> {
@@ -28,14 +30,10 @@ class FollowViewModel : ViewModel() {
                 _isLoading.postValue(false)
                 if (response.isSuccessful) {
                     val responseBody = response.body()
-                    if (response.isSuccessful) {
+                    if (response.isSuccessful && responseBody != null) {
                         val userList = responseBody
                         _users.postValue(userList)
-                        val bundle = Bundle()
-                        bundle.putString("login", username)
-                        fragment.arguments = bundle
                     }
-
                 } else {
                     Log.e(TAG, "onFailure: ${response.message()}")
                 }
@@ -49,7 +47,7 @@ class FollowViewModel : ViewModel() {
         })
     }
 
-    internal fun getFollowing(username: String, fragment : FollowFragment) {
+    internal fun getFollowing(username: String) {
         _isLoading.postValue(true)
         val client = apiService.getUserFollowing(username)
         client.enqueue(object : Callback<List<UserGithub>> {
@@ -60,9 +58,6 @@ class FollowViewModel : ViewModel() {
                     if (responseBody != null) {
                         val userList = responseBody
                         _users.postValue(userList)
-                        val bundle = Bundle()
-                        bundle.putString("login", username)
-                        fragment.arguments = bundle
                     }
                 } else {
                     Log.e(TAG, "onFailure: ${response.message()}")

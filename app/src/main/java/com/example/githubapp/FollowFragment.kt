@@ -56,7 +56,7 @@ class FollowFragment : Fragment() {
 
     private fun getFollowers(username: String) {
         val viewModel = ViewModelProvider(this).get(FollowViewModel::class.java)
-        viewModel.getFollowers(username, this)
+        viewModel.getFollowers(username)
 
         viewModel.users.observe(viewLifecycleOwner, {
             adapter.apply {
@@ -73,7 +73,7 @@ class FollowFragment : Fragment() {
 
     private fun getFollowing(username: String) {
         val viewModel = ViewModelProvider(this).get(FollowViewModel::class.java)
-        viewModel.getFollowing(username, this)
+        viewModel.getFollowing(username)
 
         viewModel.users.observe(viewLifecycleOwner, {
             adapter.apply {

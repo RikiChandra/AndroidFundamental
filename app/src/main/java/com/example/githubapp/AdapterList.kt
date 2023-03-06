@@ -17,18 +17,8 @@ class AdapterList(public val listUser: ArrayList<UserGithub>) : RecyclerView.Ada
         return ListViewHolder(view)
     }
 
-    interface OnItemClickCallback {
-        fun onItemClick(data: UserGithub)
-    }
-
-
     override fun onBindViewHolder(holder: AdapterList.ListViewHolder, position: Int) {
         val user = listUser[position]
-//        Glide.with(holder.itemView.context)
-//            .load(user.avatarUrl)
-//            .apply(RequestOptions().override(55, 55))
-//            .into(holder.imgPhoto)
-//        holder.tvName.text = user.login
 
         with(holder.itemView) {
             Glide.with(holder.itemView.context)
