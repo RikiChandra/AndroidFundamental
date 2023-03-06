@@ -26,7 +26,7 @@ class DetailActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val loadingProgressBar = findViewById<ProgressBar>(R.id.loadings)
-        val sectionsPagerAdapter = SectionsPagerAdapter(this)
+        val sectionsPagerAdapter = SectionsPagerAdapter(this, intent.getStringExtra("login") ?: "")
         val viewPager = findViewById<ViewPager2>(R.id.view_pager)
         viewPager.adapter = sectionsPagerAdapter
         val tabs = findViewById<com.google.android.material.tabs.TabLayout>(R.id.tab_layout)
@@ -50,7 +50,12 @@ class DetailActivity : AppCompatActivity() {
         // Observer untuk memperbarui tampilan saat data diubah
         viewModel.userDetail.observe(this, { detailUser ->
             showDetailUser(detailUser)
-            supportActionBar?.title = detailUser.name
+            if (detailUser.name == null) {
+                supportActionBar?.title = detailUser.login
+            } else {
+                supportActionBar?.title = detailUser.name
+            }
+
         })
 
 
@@ -70,8 +75,8 @@ class DetailActivity : AppCompatActivity() {
 
             binding.TvNama.text = detail.name
             binding.TvUsername.text = detail.login
-            followersTextView.text = "Followers: ${detail.followers}"
-            followingTextView.text = "Following: ${detail.following}"
+            followersTextView.text = "${detail.followers} Followers "
+            followingTextView.text = "${detail.following} Following"
 
         }
     }
