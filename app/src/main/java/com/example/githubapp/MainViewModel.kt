@@ -1,6 +1,6 @@
 package com.example.githubapp
 
-import android.app.DownloadManager.Query
+
 import android.util.Log
 import retrofit2.Call
 import androidx.lifecycle.LiveData
@@ -8,7 +8,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import retrofit2.Response
 import retrofit2.Callback
-import com.example.githubapp.ApiService
 
 
 class MainViewModel : ViewModel() {
