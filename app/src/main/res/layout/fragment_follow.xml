@@ -15,12 +15,12 @@
 
 
             <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/Rvdatas"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:listitem="@layout/list">
+                android:id="@+id/Rvdatas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/list">
 
-        </androidx.recyclerview.widget.RecyclerView>
+            </androidx.recyclerview.widget.RecyclerView>
 
             <ProgressBar
                 android:id="@+id/loadings"
@@ -35,8 +35,5 @@
 
         </RelativeLayout>
     </LinearLayout>
-
-
-
 
 </FrameLayout>

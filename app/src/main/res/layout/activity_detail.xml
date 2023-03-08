@@ -5,8 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:id="@+id/scroll_view"
+    android:fillViewport="true"
     tools:context=".DetailActivity">
 
     <LinearLayout
@@ -94,17 +93,9 @@
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content"
             android:background="@color/white"
-            android:elevation="6dp"
-            android:minHeight="?attr/actionBarSize"
-            app:tabGravity="fill"
-            app:tabIndicatorColor="@color/black"
-            app:tabIndicatorHeight="2dp"
-            app:tabMode="fixed"
-            app:tabSelectedTextColor="@color/black"
-            app:tabTextColor="@color/black"/>
+            app:tabTextColor="@android:color/black"/>
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/view_pager"
