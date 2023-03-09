@@ -1,4 +1,4 @@
-package com.example.githubapp
+package com.example.githubapp.view.detail
 
 import android.content.Context
 import android.util.Log
@@ -6,6 +6,8 @@ import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.githubapp.UserGithub
+import com.example.githubapp.api.ApiConfig
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

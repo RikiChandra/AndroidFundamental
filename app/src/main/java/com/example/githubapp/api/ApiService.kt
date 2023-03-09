@@ -1,5 +1,7 @@
-package com.example.githubapp
+package com.example.githubapp.api
 
+import com.example.githubapp.UserGithub
+import com.example.githubapp.UserResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path

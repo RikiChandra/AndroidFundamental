@@ -1,13 +1,14 @@
-package com.example.githubapp
+package com.example.githubapp.view.main
 
 
-import android.os.Bundle
-import android.os.Parcelable
 import android.util.Log
 import retrofit2.Call
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.githubapp.UserGithub
+import com.example.githubapp.UserResponse
+import com.example.githubapp.api.ApiConfig
 import retrofit2.Response
 import retrofit2.Callback
 

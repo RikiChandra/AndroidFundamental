@@ -1,4 +1,4 @@
-package com.example.githubapp
+package com.example.githubapp.view.main
 
 import android.app.SearchManager
 import android.content.Context
@@ -14,7 +14,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.appcompat.widget.SearchView
-
+import com.example.githubapp.R
+import com.example.githubapp.UserGithub
 
 
 class MainActivity : AppCompatActivity() {
