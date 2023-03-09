@@ -71,8 +71,8 @@ class DetailActivity : AppCompatActivity() {
 
             binding.TvNama.text = detail.name
             binding.TvUsername.text = detail.login
-            followersTextView.text = "${detail.followers} Followers "
-            followingTextView.text = "${detail.following} Following"
+            followersTextView.text = resources.getString(R.string.jmlhFollowers, detail.followers)
+            followingTextView.text = resources.getString(R.string.jmlhFollowing, detail.following)
 
         }
     }
@@ -80,7 +80,6 @@ class DetailActivity : AppCompatActivity() {
 
 
     companion object {
-        const val EXTRA_USERNAME = "extra_username"
         @StringRes
         private val TAB_TITLES = intArrayOf(
             R.string.followers,

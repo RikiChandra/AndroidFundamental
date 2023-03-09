@@ -1,9 +1,12 @@
 package com.example.githubapp
 
+import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.android.material.snackbar.Snackbar
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -14,6 +17,8 @@ class DetailModelView : ViewModel() {
 
     private val _userDetail = MutableLiveData<UserGithub>()
     val userDetail: LiveData<UserGithub> = _userDetail
+
+    private lateinit var context: Context
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean>
@@ -28,8 +33,7 @@ class DetailModelView : ViewModel() {
                 if (response.isSuccessful) {
                     val responseBody = response.body()
                     if (responseBody != null) {
-                        val users = responseBody
-                        _userDetail.postValue(users)
+                        _userDetail.postValue(responseBody)
                     }
                 } else {
                     Log.e(TAG, "onFailure: ${response.message()}")
@@ -39,7 +43,9 @@ class DetailModelView : ViewModel() {
             override fun onFailure(call: Call<UserGithub>, t: Throwable) {
                 _isLoading.postValue(false)
                 // handle error
-                Log.e(TAG, "Error: ${t.message}")
+                val errorMessage = "Error: ${t.message}"
+                Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
+                Log.e(TAG, errorMessage)
             }
         })
     }

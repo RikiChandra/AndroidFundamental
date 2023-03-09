@@ -9,28 +9,33 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.example.githubapp.databinding.ActivityDetailBinding
+import com.example.githubapp.databinding.ActivityMainBinding
+import com.example.githubapp.databinding.ListBinding
 
 
 class AdapterList(public val listUser: ArrayList<UserGithub>) : RecyclerView.Adapter<AdapterList.ListViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdapterList.ListViewHolder {
-        val view: View = LayoutInflater.from(parent.context).inflate(R.layout.list, parent, false)
-        return ListViewHolder(view)
+        val binding = ListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ListViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: AdapterList.ListViewHolder, position: Int) {
         val user = listUser[position]
 
-        with(holder.itemView) {
-            Glide.with(holder.itemView.context)
+        with(holder.binding) {
+            Glide.with(holder.binding.root.context)
                 .load(user.avatarUrl)
                 .apply(RequestOptions().override(55, 55))
-                .into(holder.imgPhoto)
-            holder.tvName.text = user.login
-            holder.itemView.setOnClickListener(){
-                val Intent = Intent(context, DetailActivity::class.java)
-                Intent.putExtra("login", user.login)
-                holder.itemView.context.startActivity(Intent)
+                .into(holder.binding.imgAvatar)
+            holder.binding.tvName.text = user.login
+            holder.binding.root.setOnClickListener {
+                val intent = Intent(holder.binding.root.context, DetailActivity::class.java)
+                intent.putExtra("login", user.login)
+                holder.binding.root.context.startActivity(intent)
             }
+
+
         }
     }
 
@@ -39,10 +44,7 @@ class AdapterList(public val listUser: ArrayList<UserGithub>) : RecyclerView.Ada
     }
 
 
-    class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var tvName: TextView = itemView.findViewById(R.id.tv_name)
-        var imgPhoto: ImageView = itemView.findViewById(R.id.img_avatar)
-    }
+    class ListViewHolder(val binding: ListBinding) : RecyclerView.ViewHolder(binding.root)
 
 
 }

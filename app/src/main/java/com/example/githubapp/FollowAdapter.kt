@@ -18,7 +18,7 @@ class FollowAdapter(val listUser: ArrayList<UserGithub>) : RecyclerView.Adapter<
 
     override fun onBindViewHolder(holder: FollowAdapter.ViewHolder, position: Int) {
         val follow = listUser[position]
-        with(holder.itemView){
+        with(holder){
             holder.tvName.text = follow.login
             Glide.with(holder.itemView.context)
                 .load(follow.avatarUrl)

@@ -1,6 +1,9 @@
 package com.example.githubapp
 
 import okhttp3.Interceptor
+import com.example.githubapp.BuildConfig
+
+
 
 class ApiConfig {
 
@@ -8,17 +11,18 @@ class ApiConfig {
         const val BASE_URL = "https://api.github.com/"
     }
 
-    val authInterceptor = Interceptor {chain ->
+    private val authInterceptor = Interceptor {chain ->
         val req = chain.request()
+        val secretKey = "token ${BuildConfig.API_KEY}"
         val requestHeaders = req.newBuilder()
-            .addHeader("Authorization", "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")
+            .addHeader("Authorization", secretKey)
             .build()
         chain.proceed(requestHeaders)
     }
 
-    val client = okhttp3.OkHttpClient.Builder().addInterceptor(authInterceptor).build()
+    private val client = okhttp3.OkHttpClient.Builder().addInterceptor(authInterceptor).build()
 
-    val retrofit = retrofit2.Retrofit.Builder()
+    private val retrofit = retrofit2.Retrofit.Builder()
         .baseUrl(BASE_URL)
         .addConverterFactory(retrofit2.converter.gson.GsonConverterFactory.create())
         .client(client)
