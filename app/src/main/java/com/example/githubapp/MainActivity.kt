@@ -25,11 +25,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
 
 
         val loadingProgressBar = findViewById<ProgressBar>(R.id.loading)
@@ -52,7 +50,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         viewModel.isNotFound.observe(this) { isNotFound ->
-            if (isNotFound ) {
+            if (isNotFound) {
                 viewModel.getUserSearch(randomText(2))
                 Toast.makeText(this, "Data tidak ditemukan", Toast.LENGTH_SHORT).show()
             }
@@ -62,7 +60,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    override  fun onCreateOptionsMenu(menu: Menu): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater: MenuInflater = menuInflater
         menu.clear()
         inflater.inflate(R.menu.option_menu, menu)
@@ -111,7 +109,6 @@ class MainActivity : AppCompatActivity() {
             Log.e("MainActivity", "Error while closing resources: ${e.message}")
         }
     }
-
 }
 
 

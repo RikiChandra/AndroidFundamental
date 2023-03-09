@@ -13,7 +13,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 
 class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
-    private lateinit var viewModel: DetailModelView
+    private lateinit var viewModel: DetailViewModel
     private var username: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,7 +39,7 @@ class DetailActivity : AppCompatActivity() {
         username = intent.getStringExtra("login") ?: ""
 
         // Membuat instance ViewModel
-        viewModel = ViewModelProvider(this).get(DetailModelView::class.java)
+        viewModel = ViewModelProvider(this).get(DetailViewModel::class.java)
 
         // Mendapatkan data user detail dari API
         viewModel.getUserDetail(username)
