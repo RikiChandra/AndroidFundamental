@@ -33,8 +33,7 @@ class FollowViewModel : ViewModel() {
                 if (response.isSuccessful) {
                     val responseBody = response.body()
                     if (response.isSuccessful && responseBody != null) {
-                        val userList = responseBody
-                        _users.postValue(userList)
+                        _users.postValue(responseBody)
                     }
                 } else {
                     Log.e(TAG, "onFailure: ${response.message()}")
@@ -58,8 +57,7 @@ class FollowViewModel : ViewModel() {
                 if (response.isSuccessful) {
                     val responseBody = response.body()
                     if (responseBody != null) {
-                        val userList = responseBody
-                        _users.postValue(userList)
+                        _users.postValue(responseBody)
                     }
                 } else {
                     Log.e(TAG, "onFailure: ${response.message()}")

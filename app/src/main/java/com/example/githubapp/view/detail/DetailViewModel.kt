@@ -1,5 +1,6 @@
 package com.example.githubapp.view.detail
 
+import android.app.Application
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
@@ -8,11 +9,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.githubapp.UserGithub
 import com.example.githubapp.api.ApiConfig
+import com.example.githubapp.data.entity.FavoriteEntity
+import com.example.githubapp.repository.FavoriteRepository
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class DetailViewModel : ViewModel() {
+class DetailViewModel(application: Application) : ViewModel() {
 
     private val apiService = ApiConfig().apiService
 
@@ -24,6 +27,19 @@ class DetailViewModel : ViewModel() {
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean>
         get() = _isLoading
+
+    private val repoFav : FavoriteRepository = FavoriteRepository(application)
+
+    fun insert(user : FavoriteEntity){
+        repoFav.insert(user)
+    }
+
+    fun delete(id : Int){
+        repoFav.delete(id)
+    }
+
+    fun getFavoriteAll(): LiveData<List<FavoriteEntity>> = repoFav.getAllFavorite()
+
 
     fun getUserDetail(username: String) {
         _isLoading.postValue(true)

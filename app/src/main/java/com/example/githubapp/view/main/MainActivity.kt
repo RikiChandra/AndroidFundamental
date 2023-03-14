@@ -2,11 +2,13 @@ package com.example.githubapp.view.main
 
 import android.app.SearchManager
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
@@ -14,8 +16,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.MenuItemCompat
 import com.example.githubapp.R
 import com.example.githubapp.UserGithub
+import com.example.githubapp.view.favorite.FavoriteActivity
 
 
 class MainActivity : AppCompatActivity() {
@@ -59,6 +63,8 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.getUserSearch(randomText(2))
 
+
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -84,6 +90,19 @@ class MainActivity : AppCompatActivity() {
         })
         return true
     }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId){
+            R.id.fav -> {
+                val intent = Intent(this, FavoriteActivity::class.java)
+                startActivity(intent)
+                return true
+            }
+            else -> true
+
+        }
+    }
+
 
 
     private fun setUserData(users: List<UserGithub>) {
@@ -111,6 +130,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 }
+
+
 
 
 

@@ -13,6 +13,10 @@ data class UserResponse(
 )
 
 data class UserGithub(
+
+    @field:SerializedName("id")
+    val id: Int,
+
     @field:SerializedName("login")
     val login: String,
 

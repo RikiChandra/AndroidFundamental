@@ -5,12 +5,15 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
 import androidx.annotation.StringRes
+import androidx.appcompat.widget.ThemedSpinnerAdapter.Helper
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.example.githubapp.R
 import com.example.githubapp.UserGithub
+import com.example.githubapp.data.entity.FavoriteEntity
 import com.example.githubapp.databinding.ActivityDetailBinding
+import com.example.githubapp.view.ViewModelFactory
 import com.google.android.material.tabs.TabLayoutMediator
 
 class DetailActivity : AppCompatActivity() {
@@ -18,10 +21,17 @@ class DetailActivity : AppCompatActivity() {
     private lateinit var viewModel: DetailViewModel
     private var username: String = ""
 
+
+    private var favoriteUser: FavoriteEntity? = null
+    private lateinit var usersFactory : DetailViewModel
+    private var buttonState:Boolean = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        usersFactory = viewFactory(this@DetailActivity)
 
         val loadingProgressBar = findViewById<ProgressBar>(R.id.loadings)
         val sectionsPagerAdapter = SectionsPagerAdapter(this, intent.getStringExtra("login") ?: "")
@@ -35,6 +45,37 @@ class DetailActivity : AppCompatActivity() {
 
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        usersFactory.userDetail.observe(this){ detailUser ->
+            val detailList = detailUser
+            showDetailUser(detailList)
+            favoriteUser = FavoriteEntity(detailUser.id, detailUser.login, detailUser.avatarUrl)
+            usersFactory.getFavoriteAll().observe(this){ favoriteList ->
+                if (favoriteList != null){
+                    for (i in favoriteList){
+                        if(detailUser.id == i.id){
+                            buttonState = true
+                            binding.fabAdd.setImageResource(R.drawable.baseline_favorite_24)
+                        }
+                    }
+                }
+            }
+
+            binding.fabAdd.setOnClickListener {
+                if (!buttonState){
+                    insertFavorite(detailList)
+                    binding.fabAdd.setImageResource(R.drawable.baseline_favorite_24)
+                    buttonState = true
+                } else {
+                    usersFactory.delete(detailList.id)
+                    binding.fabAdd.setImageResource(R.drawable.baseline_favorite_border_24)
+                    buttonState = false
+                }
+
+            }
+
+
+        }
 
 
         // Mendapatkan username dari intent
@@ -76,6 +117,21 @@ class DetailActivity : AppCompatActivity() {
             followersTextView.text = resources.getString(R.string.jmlhFollowers, detail.followers)
             followingTextView.text = resources.getString(R.string.jmlhFollowing, detail.following)
 
+        }
+    }
+
+    private fun viewFactory(activity: AppCompatActivity): DetailViewModel {
+        val factory = ViewModelFactory.getInstance(activity.application)
+        return ViewModelProvider(activity, factory).get(DetailViewModel::class.java)
+    }
+
+    private fun insertFavorite(detailList: UserGithub){
+        favoriteUser.let {
+            favoriteUser ->
+            favoriteUser?.id = detailList.id
+            favoriteUser?.login = detailList.login
+            favoriteUser?.avatarUrl = detailList.avatarUrl
+            usersFactory.insert(favoriteUser as FavoriteEntity)
         }
     }
 
