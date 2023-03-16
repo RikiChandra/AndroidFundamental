@@ -1,6 +1,8 @@
 package com.example.githubapp
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
 data class UserResponse(
     @field:SerializedName("total_count")
@@ -11,7 +13,7 @@ data class UserResponse(
 
 
 )
-
+@Parcelize
 data class UserGithub(
 
     @field:SerializedName("id")
@@ -50,5 +52,5 @@ data class UserGithub(
     @field:SerializedName("updated_at")
     val updatedAt: String,
 
-)
+): Parcelable
 

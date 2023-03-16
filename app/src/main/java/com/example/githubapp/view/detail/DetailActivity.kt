@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.appcompat.widget.ThemedSpinnerAdapter.Helper
 import androidx.lifecycle.ViewModelProvider
@@ -70,6 +71,7 @@ class DetailActivity : AppCompatActivity() {
                     usersFactory.delete(detailList.id)
                     binding.fabAdd.setImageResource(R.drawable.baseline_favorite_border_24)
                     buttonState = false
+                    Toast.makeText(this, "Berhasil dihapus dari favorite", Toast.LENGTH_SHORT).show()
                 }
 
             }
@@ -132,6 +134,7 @@ class DetailActivity : AppCompatActivity() {
             favoriteUser?.login = detailList.login
             favoriteUser?.avatarUrl = detailList.avatarUrl
             usersFactory.insert(favoriteUser as FavoriteEntity)
+            Toast.makeText(this, "Berhasil ditambahkan ke favorite", Toast.LENGTH_SHORT).show()
         }
     }
 

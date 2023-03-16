@@ -124,7 +124,9 @@
         app:fabSize="normal"
         app:layout_anchor="@id/view_pager"
         app:layout_anchorGravity="bottom|end"
-        app:srcCompat="@drawable/baseline_favorite_border_24" />
+        app:srcCompat="@drawable/baseline_favorite_border_24"
+        app:tint="@color/red"
+        />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
