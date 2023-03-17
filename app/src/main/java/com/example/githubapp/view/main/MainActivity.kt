@@ -12,20 +12,28 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuItemCompat
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import com.example.githubapp.R
 import com.example.githubapp.UserGithub
 import com.example.githubapp.databinding.ActivityMainBinding
 import com.example.githubapp.view.favorite.FavoriteActivity
+import com.example.githubapp.view.setting.SettingActivity
+import com.example.githubapp.view.setting.SettingPreference
+import com.example.githubapp.view.setting.SettingViewModelFactory
 
-
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
+private lateinit var viewModel: MainViewModel
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: MainViewModel
+
     private lateinit var adapter: AdapterList
     private var listUsergit = ArrayList<UserGithub>()
     private lateinit var recyclerView: RecyclerView
@@ -41,7 +49,9 @@ class MainActivity : AppCompatActivity() {
 
 
         val loadingProgressBar = findViewById<ProgressBar>(R.id.loading)
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+
+        val preference = SettingPreference.getInstance(dataStore)
+        viewModel = ViewModelProvider(this, SettingViewModelFactory(preference)).get(MainViewModel::class.java)
 
 
         recyclerView = findViewById(R.id.RvData)
@@ -77,6 +87,16 @@ class MainActivity : AppCompatActivity() {
             if (userList != null) {
                 listUsergit.addAll(userList)
                 adapter.notifyDataSetChanged()
+            }
+        }
+
+        viewModel.getSettingTheme().observe(this){
+            LightModeActive : Boolean ->
+            if (LightModeActive){
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             }
         }
 
@@ -117,6 +137,12 @@ class MainActivity : AppCompatActivity() {
         return when (item.itemId){
             R.id.fav -> {
                 val intent = Intent(this, FavoriteActivity::class.java)
+                startActivity(intent)
+                return true
+            }
+
+            R.id.setting -> {
+                val intent = Intent(this, SettingActivity::class.java)
                 startActivity(intent)
                 return true
             }

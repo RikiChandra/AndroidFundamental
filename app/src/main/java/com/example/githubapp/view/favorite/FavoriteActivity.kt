@@ -20,6 +20,8 @@ class FavoriteActivity : AppCompatActivity() {
         _binding = ActivityFavoriteBinding.inflate(layoutInflater)
         setContentView(binding?.root)
 
+        supportActionBar?.title = getString(R.string.favorite)
+
         favoriteFactory = viewFactory(this@FavoriteActivity)
         favoriteFactory.getFavoriteAll().observe(this){ favoriteList ->
             if (favoriteList != null){

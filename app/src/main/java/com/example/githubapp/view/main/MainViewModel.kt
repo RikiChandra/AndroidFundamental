@@ -6,14 +6,16 @@ import retrofit2.Call
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import com.example.githubapp.UserGithub
 import com.example.githubapp.UserResponse
 import com.example.githubapp.api.ApiConfig
+import com.example.githubapp.view.setting.SettingPreference
 import retrofit2.Response
 import retrofit2.Callback
 
 
-class MainViewModel : ViewModel() {
+class MainViewModel(private val preference: SettingPreference) : ViewModel() {
 
     private val apiService = ApiConfig().apiService
 
@@ -57,6 +59,10 @@ class MainViewModel : ViewModel() {
             }
         })
 
+    }
+
+    fun getSettingTheme(): LiveData<Boolean> {
+        return preference.getTheme().asLiveData()
     }
 
     companion object {

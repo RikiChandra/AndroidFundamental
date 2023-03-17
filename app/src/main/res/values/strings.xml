@@ -7,4 +7,6 @@
     <string name="empty_text">Tidak ada data</string>
     <string name="jmlhFollowers">%d Followers</string>
     <string name="jmlhFollowing">%d Following</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="favorite">List Favorite</string>
 </resources>
