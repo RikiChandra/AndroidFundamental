@@ -6,7 +6,7 @@ import androidx.room.RoomDatabase
 import com.example.githubapp.data.entity.FavoriteEntity
 
 
-@Database(entities = [FavoriteEntity::class], version = 5, exportSchema = false)
+@Database(entities = [FavoriteEntity::class], version = 6, exportSchema = true)
 abstract class FavoriteDatabase : RoomDatabase() {
 
     abstract fun favoriteDao(): FavoriteDao

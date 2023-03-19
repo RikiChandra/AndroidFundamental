@@ -29,6 +29,7 @@ class AdapterList(public val listUser: ArrayList<UserGithub>) : RecyclerView.Ada
             holder.binding.root.setOnClickListener {
                 val intent = Intent(holder.binding.root.context, DetailActivity::class.java)
                 intent.putExtra("login", user.login)
+                intent.putExtra("html_url", user.htmlUrl)
                 holder.binding.root.context.startActivity(intent)
             }
 

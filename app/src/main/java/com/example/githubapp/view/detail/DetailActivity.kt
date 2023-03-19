@@ -1,7 +1,10 @@
 package com.example.githubapp.view.detail
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
@@ -21,6 +24,7 @@ class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
     private lateinit var viewModel: DetailViewModel
     private var username: String = ""
+    private var htmlUrl: String = ""
 
 
     private var favoriteUser: FavoriteEntity? = null
@@ -50,7 +54,7 @@ class DetailActivity : AppCompatActivity() {
         usersFactory.userDetail.observe(this){ detailUser ->
             val detailList = detailUser
             showDetailUser(detailList)
-            favoriteUser = FavoriteEntity(detailUser.id, detailUser.login, detailUser.avatarUrl)
+            favoriteUser = FavoriteEntity(detailUser.id, detailUser.login, detailUser.avatarUrl, detailUser.htmlUrl)
             usersFactory.getFavoriteAll().observe(this){ favoriteList ->
                 if (favoriteList != null){
                     for (i in favoriteList){
@@ -83,6 +87,8 @@ class DetailActivity : AppCompatActivity() {
         // Mendapatkan username dari intent
         username = intent.getStringExtra("login") ?: ""
 
+        htmlUrl = intent.getStringExtra("html_url") ?: ""
+
         // Membuat instance ViewModel
         viewModel = ViewModelProvider(this).get(DetailViewModel::class.java)
 
@@ -105,6 +111,28 @@ class DetailActivity : AppCompatActivity() {
             loadingProgressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
         }
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.option_detail, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.share -> {
+                share()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun share(){
+        val intent = Intent(Intent.ACTION_SEND)
+        intent.type = "text/plain"
+        intent.putExtra(Intent.EXTRA_TEXT, htmlUrl)
+        startActivity(Intent.createChooser(intent, "Share to: "))
     }
 
     private fun showDetailUser(detail: UserGithub) {
@@ -133,6 +161,7 @@ class DetailActivity : AppCompatActivity() {
             favoriteUser?.id = detailList.id
             favoriteUser?.login = detailList.login
             favoriteUser?.avatarUrl = detailList.avatarUrl
+            favoriteUser?.htmlUrl = detailList.htmlUrl
             usersFactory.insert(favoriteUser as FavoriteEntity)
             Toast.makeText(this, "Berhasil ditambahkan ke favorite", Toast.LENGTH_SHORT).show()
         }

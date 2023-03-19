@@ -10,4 +10,6 @@
     <color name="primary_gray">#FF161B22</color>
     <color name="primary_black">#090101</color>
     <color name="red">#FF0303</color>
+    <color name="grayStroke">#FF2A2F36</color>
+    <color name="blueFB">#FF358FF8</color>
 </resources>

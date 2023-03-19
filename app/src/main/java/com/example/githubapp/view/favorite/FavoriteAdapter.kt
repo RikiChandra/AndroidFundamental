@@ -31,6 +31,7 @@ class FavoriteAdapter: RecyclerView.Adapter<FavoriteAdapter.FavoriteViewHolder>(
                 itemView.setOnClickListener {
                     val intent = Intent(itemView.context, DetailActivity::class.java)
                     intent.putExtra("login", favorite.login)
+                    intent.putExtra("html_url", favorite.htmlUrl)
                     itemView.context.startActivity(intent)
                 }
             }

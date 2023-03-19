@@ -16,4 +16,7 @@ data class FavoriteEntity(
     @ColumnInfo(name = "avatar_url")
     var avatarUrl : String,
 
+    @ColumnInfo(name = "html_url")
+    var htmlUrl : String? = null,
+
 )

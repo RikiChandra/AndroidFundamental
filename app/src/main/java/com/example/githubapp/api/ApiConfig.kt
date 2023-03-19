@@ -10,6 +10,7 @@ class ApiConfig {
     companion object {
         const val BASE_URL = "https://api.github.com/"
     }
+    
 
     private val authInterceptor = Interceptor {chain ->
         val req = chain.request()
