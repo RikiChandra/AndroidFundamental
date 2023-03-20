@@ -20,7 +20,7 @@ class SettingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_setting)
 
-        supportActionBar?.title = "Setting"
+        supportActionBar?.title = getString(R.string.setting)
 
         val switch = findViewById<SwitchMaterial>(R.id.switch_theme)
 

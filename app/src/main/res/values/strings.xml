@@ -9,4 +9,5 @@
     <string name="jmlhFollowing">%d Following</string>
     <string name="dark_mode">Dark Mode</string>
     <string name="favorite">List Favorite</string>
+    <string name="setting">Setting</string>
 </resources>
